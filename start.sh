@@ -23,3 +23,5 @@ kubectl wait --for=condition=available --timeout=120s deployment/argocd-server -
 echo "Setting up port-forwarding on port 8080..."
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 echo "Access the UI at http://localhost:8080"
+
+# To get the initial admin password use: argocd admin initial-password -n argocd
