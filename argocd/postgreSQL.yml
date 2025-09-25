@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgresql
+  namespace: postgresql
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/bitnami/charts
+    chart: postgresql
+    targetRevision: 12.5.6
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: postgresql
+  helm:
+    releaseName: argocd-postgresql
+    parameters:
+      - name: global.postgresql.auth.database
+        value: testdb
+      - name: global.postgresql.auth.Password
+        value: prueba
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
