@@ -8,7 +8,7 @@ sudo apt-get install -y curl
 
 # Install docker
 curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh && rm get-docker.shr
+sudo sh get-docker.sh && rm get-docker.sh
 
 # Install helm
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
@@ -26,4 +26,4 @@ curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/lat
 sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
 
-echo "Installation completed successfully!"
+echo "All installations completed successfully."
