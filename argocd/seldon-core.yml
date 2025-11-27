@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: seldon-core
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  project: default
+  source:
+    repoURL: 'https://storage.googleapis.com/seldon-charts'
+    chart: seldon-core-operator
+    targetRevision: '1.16.0'
+    helm:
+      values: |
+        istio:
+          enabled: true
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: mlops-seldon
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
