@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-operator
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: 'https://charts.bitnami.com/bitnami'
+      chart: kube-prometheus
+      targetRevision: '8.25.0'
+      helm:
+        valueFiles:
+          - $values/prometheus/values.yaml
+        parameters:
+          - name: node-exporter.image.repository
+            value: bitnamilegacy/node-exporter
+          - name: node-exporter.image.tag
+            value: 1.7.0-debian-11-r3
+          - name: blackboxExporter.image.repository
+            value: bitnamilegacy/blackbox-exporter
+          - name: blackboxExporter.image.tag
+            value: 0.24.0-debian-11-r143
+          - name: kubeStateMetrics.image.repository
+            value: bitnamilegacy/kube-state-metrics
+          - name: kubeStateMetrics.image.tag
+            value: 2.10.1-debian-11-r3
+          - name: operator.image.repository
+            value: bitnamilegacy/prometheus-operator
+          - name: operator.image.tag
+            value: 0.71.0-debian-11-r0
+
+    - repoURL: 'https://github.com/IliePM/mlops-infra'
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: mlops-prometheus
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true

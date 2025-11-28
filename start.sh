@@ -17,7 +17,9 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 
 # Waiting for ArgoCD pods to be ready
 echo "Waiting for ArgoCD pods to be ready..."
-kubectl wait --for=condition=available --timeout=120s deployment/argocd-server -n argocd
+kubectl wait --for=condition=available --timeout=180s deployment/argocd-server -n argocd
+
+kubectl apply -f argocd/ --recursive
 
 # Port-forwarding to access the UI
 echo "Setting up port-forwarding on port 8080..."
