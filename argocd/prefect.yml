@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prefect-server
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: 'https://prefecthq.github.io/prefect-helm'
+      chart: prefect-server
+      targetRevision: '2023.5.11'
+      helm:
+        valueFiles:
+          - $values/prefect/values.yaml
+        parameters:
+          - name: postgresql.image.tag
+            value: "14.3.0"
+          - name: postgresql.image.repository
+            value: "bitnamilegacy/postgresql"
+    - repoURL: 'https://github.com/IliePM/mlops-infra'
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: mlops-prefect
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

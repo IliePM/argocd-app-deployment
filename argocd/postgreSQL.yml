@@ -12,13 +12,17 @@ spec:
     helm:
       releaseName: argocd-postgresql
       parameters:
-        - name: global.postgresql.auth.database
+        - name: auth.database
           value: testdb
-        - name: global.postgresql.auth.postgresPassword
+        - name: auth.postgresPassword
           value: prueba
+        - name: image.repository
+          value: bitnamilegacy/postgresql
+        - name: image.tag
+          value: "15.3.0-debian-11-r7"
   destination:
     server: https://kubernetes.default.svc
-    namespace: postgresql
+    namespace: mlops-mlflow
 
   syncPolicy:
     automated:
