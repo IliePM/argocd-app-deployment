@@ -10,7 +10,7 @@ spec:
     chart: postgresql
     targetRevision: "12.5.6"
     helm:
-      releaseName: argocd-postgresql
+      releaseName: postgresql-mlflow
       parameters:
         - name: auth.database
           value: testdb
