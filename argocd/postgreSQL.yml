@@ -13,9 +13,9 @@ spec:
       releaseName: postgresql-mlflow
       parameters:
         - name: auth.database
-          value: testdb
+          value: mlflow-tracking-server
         - name: auth.postgresPassword
-          value: prueba
+          value: pass
         - name: image.repository
           value: bitnamilegacy/postgresql
         - name: image.tag
